@@ -1,26 +1,57 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+/* Base layer styles: scroll-smooth, body background */
+@layer base {
+  html { @apply scroll-smooth; }
+  body { background-color: black; }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  .glass-effect {
+    @apply bg-[rgba(255,255,240,0.8)];
+    @apply backdrop-blur-md; /* uses --blur-md */
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* Component layer: gradients and button styles */
+@layer components {
+  .luxury-gradient {
+    @apply bg-gradient-to-br
+           from-[color-mix(in oklch, var(--color-ivory) 20%, black)]
+           via-[color-mix(in oklch, var(--color-ivory) 60%, #E8B4B8)]
+           to-[var(--color-forest)];
+  }
+
+  .btn-primary {
+    @apply bg-[var(--color-forest)]
+           text-[var(--color-ivory)]
+           rounded-full font-medium
+           transition-all duration-300
+           focus:outline-none focus:ring-4 focus:ring-[var(--color-forest)] focus:ring-opacity-50
+           hover:bg-opacity-90 hover:scale-105 hover:shadow-lg
+           active:scale-95;
+
+    @screen sm { @apply px-8 py-4; }
+    @screen base { @apply px-6 py-3; }
+  }
+
+  .btn-secondary {
+    @apply border-2 border-[var(--color-forest)]
+           text-[var(--color-forest)]
+           rounded-full font-medium
+           transition-all duration-300
+           focus:outline-none focus:ring-4 focus:ring-[var(--color-forest)] focus:ring-opacity-50
+           hover:bg-[var(--color-forest)] hover:text-[var(--color-ivory)] hover:scale-105;
+
+    @screen sm { @apply px-8 py-4; }
+    @screen base { @apply px-6 py-3; }
+  }
+}
+
+/* Utility layer: custom utility example */
+@layer utilities {
+  @utility flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 }
